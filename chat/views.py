@@ -3,16 +3,13 @@ from django.http import JsonResponse
 
 # Create your views here.
 
-def index(request):
-    return JsonResponse({'dialogues': [
-        {"id": 1, "name": "Dilogue 1", 
-         "last_message": {"sender": 123, "message": "The last message of this dialogue"}},
-        {"id": 2, "name": "Dilogue 2",
-         "last_message": {"sender": 124, "message": "Almost the last message of this dialogue"}},
-        {"id": 3, "name": "Dilogue 3",
-         "last_message": {"sender": 125, "message": "Definitely the last message of this dialogue"}},
-    ]})
+def chat_list(request):
+    return JsonResponse([
+        {"id": 1, "name": "", "users": [0, 1]},
+        {"id": 2, "name": "", "users": [0, 2]},
+        {"id": 3, "name": "Chat #", "users": [0, 1, 2]},
+    ], safe=False) # safe=True only allows to send dicts
 
 # depth states for how many message batches to load (30 for each level)
 def chat(request, chat_id, depth=1): 
-    return JsonResponse({"messages": []})
+    return JsonResponse([], safe=False)
