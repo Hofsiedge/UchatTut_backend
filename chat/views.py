@@ -1,5 +1,9 @@
 # from django.shortcuts import render
 from django.http import JsonResponse
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
+from events import Event
 
 # Create your views here.
 
@@ -12,4 +16,7 @@ def chat_list(request):
 
 # depth states for how many message batches to load (30 for each level)
 def chat(request, chat_id, depth=1): 
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)('user_0', {'type': 'event.notify'}) # FIXME
     return JsonResponse([], safe=False)
+
