@@ -6,7 +6,7 @@ from message.models import Message
 
 
 class Chat(models.Model):
-    users   = models.ManyToManyField(User, related_name="chats")
+    users   = models.ManyToManyField(User)
     name    = models.CharField(max_length=50)
     messages = models.ManyToManyField(Message, related_name='+')
 

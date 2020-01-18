@@ -1,13 +1,12 @@
 from django.http import JsonResponse
+from django.db.models import Q
 import json
 from .models import User
 
 def user_list(request):
     if request.method == 'GET':
-        data  = json.loads(request.body)
-        users = User.objects
-        users = users.filter(surname__startswith=data.get('surname', ''))
-        users = users.filter(name__startswith=data.get('name', ''))
+        query = request.GET.get('q', '')
+        users = User.objects.filter(Q(name__contains=query) | Q(surname__contains=query))
     return JsonResponse(list(map(lambda x: x.json_repr, users)), safe=False)
 
 def single_user(request, user_id):
