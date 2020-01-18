@@ -72,7 +72,7 @@ Attachment {
 Message {
     "id":           message_id,
     "sender":       sender_id,
-    "timestamp":    timestamp,
+    "time":    timestamp,
     "text":         "message text",
     "attachments":  [
         {... Attachment ...},

@@ -17,9 +17,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     surname     = models.CharField(max_length=50)
 
     phone_number = models.BigIntegerField(default=0)
-    address     = models.CharField(max_length=100)
+    address     = models.CharField(max_length=100, default='')
 
-    photo       = models.ImageField()
+    photo       = models.ImageField(null=True, blank=True)
 
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = []

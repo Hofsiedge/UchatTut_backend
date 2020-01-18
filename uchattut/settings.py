@@ -35,7 +35,6 @@ ALLOWED_HOSTS = ['0.0.0.0', 'uchattut.herokuapp.com']
 
 INSTALLED_APPS = [
     'channels',
-    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'message',
+    'chat',
 ]
 
 MIDDLEWARE = [
