@@ -13,7 +13,7 @@ class Message(models.Model):
     # messages, image, file
 
     def __str__(self):
-        return f'{self.sender} [{time}]: {text}'
+        return f'{self.sender} [{self.time}]: {self.text}'
 
     @property
     def json_repr(self):
