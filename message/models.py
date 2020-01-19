@@ -3,7 +3,6 @@ from django.utils import timezone
 
 from user.models import User
 
-# TODO: add to admin panel
 
 class Message(models.Model):
     sender  = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='messages', null=True)
