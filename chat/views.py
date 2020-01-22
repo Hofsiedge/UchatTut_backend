@@ -64,10 +64,15 @@ def chat(request, chat_id, depth=1):
                                     status=400)
             msg = message.services.read(id=msg_id)
             source.messages.add(msg)
-            # TODO: send notification
-            # channel_layer = get_channel_layer()
-            # async_to_sync(channel_layer.group_send)('user_0', {'type': 'event.notify'})
             serializer = MessageSerializer(msg)
+
+            # TODO: send notification
+            channel_layer = get_channel_layer()
+            for receiver in source.users:
+                async_to_sync(channel_layer.group_send)(
+                    f'user_{receiver.id}', 
+                    {'type': 'event.notify', 'event_type': 'message', 'event': serializer.data})
+
             return JsonResponse(serializer.data)
 
         return JsonResponse({'message': 'Incorrect value of "type" field. Consider "message" type.'}, 
