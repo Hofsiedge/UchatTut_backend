@@ -45,7 +45,7 @@ def chat(request, chat_id, depth=1):
 
     if request.method == 'POST':        # send a message to the chat
         # TODO: refactor with a serializer ?
-        data = json.loads(request.content)
+        data = json.loads(request.body)
         content_type = data.get('type', None)
 
         if content_type is None:
@@ -57,15 +57,18 @@ def chat(request, chat_id, depth=1):
             if msg_id is None:
                 return JsonResponse({'message': 'Missing "msg_id" field.'}, 
                                     status=400)
-            if msg_id is not int:
-                return JsonResponse({'message': '"msg_id" must be an integer.'}, 
+            try:
+                msg_id = int(msg_id)
+            except:
+                return JsonResponse({'message': '"msg_id" must be an integer.'},
                                     status=400)
-            message = message.services.read(id=msg_id)
-            source.messages.add(message)
+            msg = message.services.read(id=msg_id)
+            source.messages.add(msg)
             # TODO: send notification
             # channel_layer = get_channel_layer()
             # async_to_sync(channel_layer.group_send)('user_0', {'type': 'event.notify'})
-            return JsonResponse({'msg_id': 0})
+            serializer = MessageSerializer(msg)
+            return JsonResponse(serializer.data)
 
         return JsonResponse({'message': 'Incorrect value of "type" field. Consider "message" type.'}, 
                             status=400)

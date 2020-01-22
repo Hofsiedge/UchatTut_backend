@@ -11,7 +11,7 @@ class Chat(models.Model):
     messages = models.ManyToManyField(Message, related_name='+', blank=True)
 
     def __str__(self):
-        return f'{self.name}: ' + '; '.join(map(str, self.users))
+        return f'{self.name}: ' + '; '.join(map(str, self.users.all()))
 
     @property
     def json_repr(self):
