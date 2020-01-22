@@ -5,14 +5,17 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 import json
-from .models import User
+# from .models import User
+
+from . import services
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_list(request):
     if request.method == 'GET':
         query = request.GET.get('q', '')
-        users = User.objects.filter(Q(name__contains=query) | Q(surname__contains=query))
+        users = services.search(query)
+        # users = User.objects.filter(Q(name__contains=query) | Q(surname__contains=query))
     return JsonResponse(list(map(lambda x: x.json_repr, users)), safe=False)
 
 @api_view(['GET', 'PATCH'])
@@ -20,7 +23,8 @@ def user_list(request):
 def single_user(request, user_id):
 
     if request.method == 'GET':
-        user = User.objects.get(id=user_id)
+        user = services.get_user(id=user_id)
+        # user = User.objects.get(id=user_id)
         return JsonResponse(user.json_repr)
 
     if request.method == 'PATCH':

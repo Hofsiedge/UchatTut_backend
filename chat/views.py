@@ -6,7 +6,10 @@ from rest_framework.decorators import api_view, permission_classes
 import json
 
 from events import Event
-from .models import Chat
+from . import services
+import message.services
+
+from message.serializers import MessageSerializer
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -19,12 +22,14 @@ def chat_list(request):
 # depth states for how many message batches to load (30 for each level)
 def chat(request, chat_id, depth=1): 
 
-    source = Chat.objects.get(id=chat_id)
+    source = services.read(id=chat_id)
 
     if request.method == 'GET':
-        return JsonResponse(list(map(lambda x: x.json_repr, chat.messages.reverse())), safe=False)
+        serializer = MessageSerializer(source.messages.reverse(), many=True)
+        return JsonResponse(serializer.data, safe=False)
 
     if request.method == 'POST':        # send a message to the chat
+        # TODO: refactor with a serializer ?
         data = json.loads(request.content)
         content_type = data.get('type', None)
 
@@ -40,11 +45,12 @@ def chat(request, chat_id, depth=1):
             if msg_id is not int:
                 return JsonResponse({'message': '"msg_id" must be an integer.'}, 
                                     status=400)
-            message = Message.objects.get(id=msg_id)
-            chat.messages.add(message)
+            message = message.services.read(id=msg_id)
+            source.messages.add(message)
             # TODO: send notification
             # channel_layer = get_channel_layer()
-            # async_to_sync(channel_layer.group_send)('user_0', {'type': 'event.notify'}) # FIXME
+            # async_to_sync(channel_layer.group_send)('user_0', {'type': 'event.notify'})
+            return JsonResponse({'msg_id': 0})
 
         return JsonResponse({'message': 'Incorrect value of "type" field. Consider "message" type.'}, 
                             status=400)
