@@ -34,12 +34,10 @@ class EventConsumer(JsonWebsocketConsumer):
         print('Attempt to send a message via web-socket detected!')
 
     def event_notify(self, event):
+        # serializing dispatching
         event_json = {
             'event_type':   event.json_type,
             'event':        event.json_repr,
         }
         self.send_json(event_json)
-
-
-    # TODO: add json_type and json_repr to models
 
