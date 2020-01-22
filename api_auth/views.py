@@ -40,7 +40,9 @@ def register(request):
     if serializer.is_valid():
         user_data = {field: data for (field, data) in request.data.items() 
                      if field in VALID_USER_FIELDS}
-        serializer.save()
-        return Response(serializer.data, status=201)
+        user = serializer.save()
+        token, _ = Token.objects.get_or_create(user=user)
+        # return Response(serializer.data, status=201)
+        return Response({"token": token}, status=201)
     return Response(serializer._errors, status=400)
 

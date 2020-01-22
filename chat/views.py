@@ -68,7 +68,7 @@ def chat(request, chat_id, depth=1):
 
             # TODO: send notification
             channel_layer = get_channel_layer()
-            for receiver in source.users:
+            for receiver in source.users.all():
                 async_to_sync(channel_layer.group_send)(
                     f'user_{receiver.id}', 
                     {'type': 'event.notify', 'event_type': 'message', 'event': serializer.data})

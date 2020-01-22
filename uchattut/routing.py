@@ -3,11 +3,11 @@ from    channels.routing    import ProtocolTypeRouter, URLRouter, ChannelNameRou
 import  events.routing
 from    events.consumers    import EventConsumer
 
-from events.middleware import TokenAuthMiddleware
+from events.middleware import TokenAuthMiddlewareStack
 
 application = ProtocolTypeRouter({
     # (http->django views are added by default)
-    'websocket': TokenAuthMiddleware(
+    'websocket': TokenAuthMiddlewareStack(
         URLRouter(
             events.routing.websocket_urlpatterns
         )
