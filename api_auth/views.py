@@ -43,6 +43,6 @@ def register(request):
         user = serializer.save()
         token, _ = Token.objects.get_or_create(user=user)
         # return Response(serializer.data, status=201)
-        return Response({"token": token}, status=201)
+        return Response({"token": token.key}, status=201)
     return Response(serializer._errors, status=400)
 
