@@ -10,12 +10,27 @@ from . import services
 import message.services
 
 from message.serializers import MessageSerializer
+from .serializers import ChatSerializer
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def chat_list(request):
     user = request.user
-    return JsonResponse(list(map(lambda x: x.json_repr, user.chat_set.all())), safe=False)
+
+    if request.method == 'GET':
+        serializer = ChatSerializer(user.chat_set.all(), many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        serializer = ChatSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+
+        return JsonResponse(serializer._errors, status=400)
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])

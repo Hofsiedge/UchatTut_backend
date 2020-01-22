@@ -1,3 +1,4 @@
+# api_auth/views.py
 from django.contrib.auth import authenticate, get_user_model
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token

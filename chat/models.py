@@ -8,10 +8,10 @@ from message.models import Message
 class Chat(models.Model):
     users   = models.ManyToManyField(User)
     name    = models.CharField(max_length=50)
-    messages = models.ManyToManyField(Message, related_name='+')
+    messages = models.ManyToManyField(Message, related_name='+', blank=True)
 
     def __str__(self):
-        return f'{self.name}: ' + '; '.join(map(str, users))
+        return f'{self.name}: ' + '; '.join(map(str, self.users))
 
     @property
     def json_repr(self):
