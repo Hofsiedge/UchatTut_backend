@@ -15,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)
 
     name        = models.CharField(max_length=50)
-    surname     = models.CharField(max_length=50)
+    surname     = models.CharField(max_length=50, default='')
 
     phone_number = models.BigIntegerField(default=0)
     address     = models.CharField(max_length=100, default='')
