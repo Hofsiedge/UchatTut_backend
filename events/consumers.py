@@ -3,7 +3,7 @@ from django.contrib.auth.models import AnonymousUser
 from channels.generic.websocket import JsonWebsocketConsumer
 import json
 
-from messages.serializers import MessageSerializer
+from message.serializers import MessageSerializer
 
 class EventConsumer(JsonWebsocketConsumer):
     def connect(self):
