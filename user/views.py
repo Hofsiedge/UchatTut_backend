@@ -6,7 +6,6 @@ from rest_framework.decorators import api_view, permission_classes
 
 import json
 from user.serializers import UserSerializer
-# from .models import User
 
 from . import services
 
@@ -15,8 +14,9 @@ from . import services
 def user_list(request):
     if request.method == 'GET':
         query = request.GET.get('q', '')
-        users = services.search(query)
-    return JsonResponse(list(map(lambda x: x.json_repr, users)), safe=False)
+        users = services.search(query, ~user.is_tutor)
+        return JsonResponse(UserSerializer(users, many=True).data, safe=False)
+    # return JsonResponse(list(map(lambda x: x.json_repr, users)), safe=False)
 
 @api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])

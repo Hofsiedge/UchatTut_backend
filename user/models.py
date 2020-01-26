@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
@@ -16,7 +17,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     name        = models.CharField(max_length=50)
     surname     = models.CharField(max_length=50, default='')
+
     is_tutor    = models.BooleanField(default=False)
+    form        = models.PositiveIntegerField(null=True)
+    related     = models.ManyToManyField('self', symmetrical=True)
+    subjects    = ArrayField(models.CharField(max_length=50), null=True, blank=True)
 
     phone_number = models.BigIntegerField(default=0)
     address     = models.CharField(max_length=100, default='')
