@@ -7,5 +7,5 @@ def read(id):
 
 def create(serializer: MessageSerializer):
     if serializer.is_valid():
-        serializer.save()
-        return serializer
+        message = serializer.save()
+        return message

@@ -16,11 +16,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     name        = models.CharField(max_length=50)
     surname     = models.CharField(max_length=50, default='')
+    is_tutor    = models.BooleanField(default=False)
 
     phone_number = models.BigIntegerField(default=0)
     address     = models.CharField(max_length=100, default='')
 
     photo       = models.ImageField(null=True, blank=True)
+
 
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = []
@@ -30,13 +32,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-    @property
-    def json_repr(self):
-        return {
-            "id":       self.id,
-            "name":     self.name,
-            "surname":  self.surname,
-            "phone":    self.phone_number,
-            "address":  self.address,
-            "photo":    "placeholder",
-        }
