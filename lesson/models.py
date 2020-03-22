@@ -14,7 +14,7 @@ class Lesson(models.Model):
     student     = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student_lessons')
     color       = models.PositiveIntegerField()     # ARGB
     #place       = models.PointField(srid=4326)
-    place       = models.CharField(max_length=200)
+    place       = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return f'{self.title} {self.date} ({self.start_time} - {self.end_time}). {self.tutor} - {self.student}'

@@ -94,12 +94,12 @@ WSGI_APPLICATION = 'uchattut.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'uchattut',
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_USER', ''),
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE':   'django.db.backends.postgresql_psycopg2',
+        'NAME':     'uchattut',
+        'USER':     os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST':     '127.0.0.1',
+        'PORT':     '5432',
     }
 }
 
