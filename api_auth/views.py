@@ -35,14 +35,14 @@ def login(request):
 @api_view(['POST'])
 @permission_classes((AllowAny, ))
 def register(request):
-     VALID_USER_FIELDS = [f.name for f in get_user_model()._meta.fields]
-     serializer = UserSerializer(data=json.loads(request.body))
-     if serializer.is_valid():
-         user_data = {field: data for (field, data) in request.data.items()
-                      if field in VALID_USER_FIELDS}
-         user = serializer.save()
-         token, _ = Token.objects.get_or_create(user=user)
-         # return Response(serializer.data, status=201)
-         return Response({"token": token.key}, status=201)
-     return Response(serializer._errors, status=400)
+    VALID_USER_FIELDS = [f.name for f in get_user_model()._meta.fields]
+    serializer = UserSerializer(data=json.loads(request.body))
+    if serializer.is_valid():
+        user_data = {field: data for (field, data) in request.data.items()
+                     if field in VALID_USER_FIELDS}
+        user = serializer.save()
+        token, _ = Token.objects.get_or_create(user=user)
+        # return Response(serializer.data, status=201)
+        return Response({"token": token.key}, status=201)
+    return Response(serializer._errors, status=400)
 

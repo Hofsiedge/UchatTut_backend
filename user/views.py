@@ -10,6 +10,7 @@ from user.serializers import UserSerializer
 from . import services
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def user_list(request):
     if request.method == 'GET':
         query = request.GET.get('q', '')

@@ -19,7 +19,8 @@ def lesson(request, id: int):
         return JsonResponse(serializer.data, safe=False)
     elif request.method == 'DELETE':
         if services.delete(user, id):
-            return JsonResponse({'message': 'Lesson deleted!'}, safe=False)
+            return JsonResponse({'message': 'Lesson deleted!'})
+        return JsonResponse({'message': f'Lesson {id} not found'}, status=404)
 
 
 
@@ -39,7 +40,7 @@ def lessons(request):
             return JsonResponse({'message': 'Only for tutors!'}, status=403)
         serializer = LessonSerializer(data={**data, 'tutor': user.id})
         if services.create(serializer):
-            return JsonResponse({'message': 'Lesson created!'}, safe=False)
+            return JsonResponse({'message': 'Lesson created!'})
         else:
             return JsonResponse(serializer._errors, status=400)
 
