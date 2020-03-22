@@ -1,6 +1,7 @@
 # lesson/models.py
 from django.db import models
 from django.utils import timezone
+# from django.contrib.gis.db import models
 
 from user.models import User
 
@@ -12,6 +13,7 @@ class Lesson(models.Model):
     tutor       = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tutor_lessons')
     student     = models.ForeignKey(User, on_delete=models.CASCADE, related_name='student_lessons')
     color       = models.PositiveIntegerField()     # ARGB
+    #place       = models.PointField(srid=4326)
 
     def __str__(self):
         return f'{self.title} {self.date} ({self.start_time} - {self.end_time}). {self.tutor} - {self.student}'

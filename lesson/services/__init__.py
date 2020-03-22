@@ -1,1 +1,1 @@
-from .crud import read, filter, create
+from .crud import read, filter, create, delete

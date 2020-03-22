@@ -17,7 +17,6 @@ from .serializers import ChatSerializer
 @permission_classes([IsAuthenticated])
 def chat_list(request):
     user = request.user
-
     if request.method == 'GET':
         serializer = ChatSerializer(user.chat_set.all(), many=True)
         return JsonResponse(serializer.data, safe=False)
