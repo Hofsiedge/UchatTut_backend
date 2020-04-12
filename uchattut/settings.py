@@ -28,6 +28,9 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', '') == 'True'
 
+# FireBase App Autorization Key
+FB_APP_KEY = 'AAAAcyApVPA:APA91bGqomkHd8X9l9cZRMi0H3soPo77lE1wKpuk6CxNLLoQzgwuMK9kaqGH9vAzAI3P7lj5AfGFAOt8INabk3rHZDwWvDVNAGAdTmjn9NCZYHwkK0JA3KYHqwhIe7R5w0MjDh00PvTt'
+
 ALLOWED_HOSTS = [
     'localhost',
     '0.0.0.0',
@@ -102,7 +105,7 @@ DATABASES = {
         'ENGINE':   'django.db.backends.postgresql_psycopg2',
         'NAME':     'uchattut',
         'USER':     os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'admin'),
         'HOST':     '127.0.0.1',
         'PORT':     '5432',
     }

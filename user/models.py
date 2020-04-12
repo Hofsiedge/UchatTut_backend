@@ -28,6 +28,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     photo       = models.ImageField(null=True, blank=True)
 
+    fcm_token   = models.CharField(max_length=200, null=True)
+
 
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = []
